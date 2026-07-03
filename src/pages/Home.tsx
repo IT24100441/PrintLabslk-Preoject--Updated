@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiArrowDown, FiArrowRight, FiLayers, FiCpu, FiZap } from 'react-icons/fi';
+import { FiArrowDown, FiArrowRight, FiLayers, FiCpu, FiZap, FiCheck, FiPhone, FiMail, FiMapPin, FiClock, FiExternalLink } from 'react-icons/fi';
 import { useIntersectionObserver } from '../hooks/useAuth';
 import ProductCard from '../components/ProductCard';
 import axios from 'axios';
@@ -112,54 +112,240 @@ const Home: React.FC = () => {
           position: 'relative',
           minHeight: '100vh',
           display: 'flex',
-          alignItems: 'center',
+          flexDirection: 'column',
           justifyContent: 'center',
+          alignItems: 'center',
           overflow: 'hidden',
-          paddingTop: '4rem',
+          paddingTop: '6rem',
           paddingBottom: '4rem',
         }}
       >
-        <div className="section-container" style={{ textAlign: 'center', position: 'relative', zIndex: 2 }}>
-
-          {/* Version badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            style={{ display: 'flex', justifyContent: 'center', marginBottom: '2rem' }}
+        <div className="section-container" style={{ textAlign: 'center', position: 'relative', zIndex: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          
+          {/* Logo Showcase with pulsing ring (Centered and Bigger) */}
+          <motion.div 
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+            style={{ position: 'relative', marginBottom: '1.5rem', cursor: 'pointer' }}
           >
+            {/* Glowing halo */}
             <div
               style={{
-                display: 'inline-flex',
+                position: 'absolute',
+                inset: -8,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #8B5CF6, #6366F1, #06B6D4)',
+                opacity: 0.35,
+                filter: 'blur(10px)',
+                animation: 'pulseGlow 4s ease-in-out infinite alternate',
+              }}
+            />
+            
+            {/* White circle background - Larger size 150px */}
+            <div
+              style={{
+                width: 150,
+                height: 150,
+                borderRadius: '50%',
+                background: '#FFFFFF',
+                display: 'flex',
                 alignItems: 'center',
-                gap: '0.4rem',
-                padding: '0.35rem 1rem',
-                borderRadius: 99,
-                border: '1px solid rgba(139,92,246,0.35)',
-                background: 'rgba(139,92,246,0.08)',
-                fontSize: '0.78rem',
-                fontWeight: 600,
-                color: '#A78BFA',
-                letterSpacing: '0.04em',
-                animation: 'badgeGlow 3s ease-in-out infinite',
-                fontFamily: '"Plus Jakarta Sans", sans-serif',
+                justifyContent: 'center',
+                border: '4px solid rgba(255, 255, 255, 0.95)',
+                boxShadow: '0 16px 40px rgba(255,255,255,0.25), 0 0 24px rgba(139,92,246,0.2)',
+                overflow: 'hidden',
+                position: 'relative',
               }}
             >
-              <span style={{
-                width: 7,
-                height: 7,
-                borderRadius: '50%',
-                background: '#8B5CF6',
-                boxShadow: '0 0 6px #8B5CF6',
-                display: 'inline-block',
-              }} />
-              v2.0 Marketplace Live — Premium 3D Assets
+              <img
+                src="/images/logo.jpg"
+                alt="PrintLabs LK Logo"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                  const fallback = document.getElementById('hero-fallback-logo');
+                  if (fallback) fallback.style.display = 'flex';
+                }}
+                style={{
+                  width: '85%',
+                  height: '85%',
+                  objectFit: 'contain',
+                }}
+              />
+              <div
+                id="hero-fallback-logo"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+                  display: 'none',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontWeight: 900,
+                  fontSize: '3rem',
+                  color: '#FFF',
+                  fontFamily: '"Plus Jakarta Sans", sans-serif',
+                }}
+              >
+                PL
+              </div>
             </div>
           </motion.div>
 
-          {/* Main heading */}
+          {/* Company Name (Centered and Bigger) */}
+          <h2
+            style={{
+              fontFamily: '"Plus Jakarta Sans", sans-serif',
+              fontWeight: 800,
+              fontSize: 'clamp(2.6rem, 7vw, 4.2rem)',
+              letterSpacing: '-0.03em',
+              color: '#FFFFFF',
+              marginBottom: '0.25rem',
+              lineHeight: 1.1,
+            }}
+          >
+            PrintLabs{' '}
+            <span style={{
+              background: 'linear-gradient(135deg, #8B5CF6, #6366F1)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              fontWeight: 900,
+            }}>
+              LK
+            </span>
+          </h2>
+
+          <p style={{
+            color: '#64748B',
+            fontFamily: '"Plus Jakarta Sans", sans-serif',
+            fontSize: '0.85rem',
+            fontWeight: 600,
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            marginBottom: '1rem',
+          }}>
+            Design It. Print It. Own It.
+          </p>
+
+          {/* Status Indicator */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.4rem',
+            padding: '0.3rem 0.9rem',
+            borderRadius: 99,
+            background: 'rgba(16,185,129,0.08)',
+            border: '1px solid rgba(16,185,129,0.3)',
+            fontSize: '0.75rem',
+            fontWeight: 600,
+            color: '#34D399',
+            marginBottom: '2rem',
+            fontFamily: '"Plus Jakarta Sans", sans-serif',
+          }}>
+            <span style={{
+              width: 6,
+              height: 6,
+              borderRadius: '50%',
+              background: '#10B981',
+              boxShadow: '0 0 6px #10B981',
+              display: 'inline-block',
+            }} />
+            Accepting Custom Orders & Design Files
+          </div>
+
+          {/* Horizontal Corporate Details Badges */}
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.85rem',
+            justifyContent: 'center',
+            width: '100%',
+            maxWidth: '900px',
+            marginBottom: '3rem',
+          }}>
+            {[
+              {
+                label: 'Location',
+                value: 'Yakkala, Sri Lanka',
+                icon: <FiMapPin size={14} />,
+                href: 'https://www.google.com/maps/search/Yakkala,+Sri+Lanka'
+              },
+              {
+                label: 'Phone',
+                value: '072 287 6497',
+                icon: <FiPhone size={14} />,
+                href: 'tel:0722876497'
+              },
+              {
+                label: 'Email',
+                value: 'info@printlabs.lk',
+                icon: <FiMail size={14} />,
+                href: 'mailto:info@printlabs.lk'
+              },
+              {
+                label: 'Hours',
+                value: 'Mon - Sat: 8:00 AM - 6:00 PM',
+                icon: <FiClock size={14} />
+              }
+            ].map((item, idx) => (
+              <div
+                key={idx}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.6rem',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '12px',
+                  background: 'rgba(255,255,255,0.025)',
+                  border: '1px solid rgba(255,255,255,0.05)',
+                  backdropFilter: 'blur(8px)',
+                  transition: 'all 0.2s ease',
+                }}
+                className="hover:bg-white hover:bg-opacity-[0.05] hover:border-white hover:border-opacity-10"
+              >
+                <div style={{ color: '#8B5CF6', display: 'flex', alignItems: 'center' }}>
+                  {item.icon}
+                </div>
+                <div style={{ display: 'flex', gap: '0.35rem', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: 500, fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
+                    {item.label}:
+                  </span>
+                  {item.href ? (
+                    <a
+                      href={item.href}
+                      target={item.label === 'Location' ? '_blank' : undefined}
+                      rel={item.label === 'Location' ? 'noopener noreferrer' : undefined}
+                      style={{
+                        color: '#E2E8F0',
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        textDecoration: 'none',
+                        fontFamily: '"Plus Jakarta Sans", sans-serif',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.2rem',
+                      }}
+                      className="hover:text-up-violet"
+                    >
+                      {item.value} {item.label === 'Location' && <FiExternalLink size={10} style={{ color: '#64748B' }} />}
+                    </a>
+                  ) : (
+                    <span style={{ color: '#E2E8F0', fontSize: '0.8rem', fontWeight: 600, fontFamily: '"Plus Jakarta Sans", sans-serif' }}>
+                      {item.value}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Separator line */}
+          <div style={{ width: '80px', height: '2px', background: 'linear-gradient(90deg, transparent, rgba(139,92,246,0.3), transparent)', marginBottom: '3rem' }} />
+
+          {/* Main Heading Text */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
           >
@@ -167,12 +353,12 @@ const Home: React.FC = () => {
               style={{
                 fontFamily: '"Plus Jakarta Sans", "Inter", sans-serif',
                 fontWeight: 300,
-                fontSize: 'clamp(2.8rem, 7vw, 5.2rem)',
-                lineHeight: 1.05,
-                letterSpacing: '-0.04em',
+                fontSize: 'clamp(2rem, 5vw, 3.2rem)',
+                lineHeight: 1.15,
+                letterSpacing: '-0.03em',
                 color: '#FFFFFF',
                 marginBottom: '1.25rem',
-                maxWidth: '900px',
+                maxWidth: '850px',
                 margin: '0 auto 1.25rem',
               }}
             >
@@ -197,11 +383,11 @@ const Home: React.FC = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
             style={{
               color: '#94A3B8',
-              fontSize: 'clamp(1rem, 2.5vw, 1.15rem)',
-              maxWidth: '600px',
+              fontSize: 'clamp(0.95rem, 2vw, 1.1rem)',
+              maxWidth: '650px',
               margin: '0 auto 2.5rem',
               lineHeight: 1.7,
               fontWeight: 400,
@@ -216,20 +402,20 @@ const Home: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
             style={{
               display: 'flex',
               gap: '0.85rem',
               justifyContent: 'center',
               flexWrap: 'wrap',
-              marginBottom: '4rem',
+              marginBottom: '3rem',
             }}
           >
             <Link
               to="/stl-files"
               id="hero-explore-btn"
               className="up-btn-primary"
-              style={{ padding: '0.8rem 2rem', fontSize: '0.95rem' }}
+              style={{ padding: '0.85rem 2.2rem', fontSize: '0.95rem' }}
             >
               Explore STL Files <FiArrowRight size={16} />
             </Link>
@@ -237,11 +423,43 @@ const Home: React.FC = () => {
               to="/store"
               id="hero-shop-btn"
               className="up-btn-secondary"
-              style={{ padding: '0.8rem 2rem', fontSize: '0.95rem' }}
+              style={{ padding: '0.85rem 2.2rem', fontSize: '0.95rem' }}
             >
               Shop 3D Items
             </Link>
           </motion.div>
+
+          {/* Offering badging */}
+          <div style={{
+            display: 'flex',
+            gap: '0.6rem',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            marginBottom: '4rem'
+          }}>
+            {[
+              { text: 'STL Files', color: '#8B5CF6' },
+              { text: '3D Print', color: '#6366F1' },
+              { text: 'Custom Design', color: '#06B6D4' }
+            ].map((badge, idx) => (
+              <span
+                key={idx}
+                className="up-pill-badge"
+                style={{
+                  borderColor: `rgba(${badge.color === '#8B5CF6' ? '139,92,246' : badge.color === '#6366F1' ? '99,102,241' : '6,182,212'}, 0.35)`,
+                  color: badge.color,
+                  background: `rgba(${badge.color === '#8B5CF6' ? '139,92,246' : badge.color === '#6366F1' ? '99,102,241' : '6,182,212'}, 0.06)`,
+                  fontSize: '0.72rem',
+                  padding: '0.25rem 0.75rem',
+                  borderRadius: '8px',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                }}
+              >
+                {badge.text}
+              </span>
+            ))}
+          </div>
 
           {/* Scroll indicator */}
           <motion.div
